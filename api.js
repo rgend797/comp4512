@@ -227,8 +227,9 @@ app.get('/api/results/driver/:ref/seasons/:start/:end', async (req, res) => {
     .eq('drivers.driverRef', req.params.ref)
     .gte('races.year', req.params.start)
     .lte('races.year', req.params.end);
-    if(data.length == 0){res.send("No such results.");}
-    else{res.send(data)}; 
+    const filtered = data.filter(function (a){return a.races != null;});
+    if(filtered.length == 0){res.send("No such results.");}
+    else{res.send(filtered);} 
 }); 
 
 app.get('/api/qualifying/:raceId', async (req, res) => { 
